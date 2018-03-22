@@ -16,7 +16,7 @@ export default {
     }
   },
   methods: {
-    logout: function() {
+    logout: function () {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })

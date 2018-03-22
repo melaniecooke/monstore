@@ -28,7 +28,7 @@
                     (err) => {
                         alert('Oops, ' + err.message)
                     }
-                );
+                )
             }
         }
     }

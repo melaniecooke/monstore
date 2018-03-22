@@ -7,19 +7,19 @@ import firebase from 'firebase'
 
 Vue.config.productionTip = false
 
-let app;
+let app
 // Initialize Firebase
 let config = {
-  apiKey: "AIzaSyAG-gMvfEY1zz598izs4b3vf1a8HoXhB70",
-  authDomain: "monstore-26d9d.firebaseapp.com",
-  databaseURL: "https://monstore-26d9d.firebaseio.com",
-  projectId: "monstore-26d9d",
-  storageBucket: "monstore-26d9d.appspot.com",
-  messagingSenderId: "786970198271"
-};
+  apiKey: 'AIzaSyAG-gMvfEY1zz598izs4b3vf1a8HoXhB70',
+  authDomain: 'monstore-26d9d.firebaseapp.com',
+  databaseURL: 'https://monstore-26d9d.firebaseio.com',
+  projectId: 'monstore-26d9d',
+  storageBucket: 'monstore-26d9d.appspot.com',
+  messagingSenderId: '786970198271'
+}
 
 firebase.initializeApp(config)
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (!app) {
     /* eslint-disable no-new */
     app = new Vue({
@@ -29,7 +29,4 @@ firebase.auth().onAuthStateChanged(function(user) {
       template: '<App/>'
     })
   }
-});
-
-
-
+})

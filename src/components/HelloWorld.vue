@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <ul>
+      <li v-for="(monster, index) in monsters" v-bind:key="index">{{monster.name}}</li>
+    </ul>
     <button v-on:click="logout">Logout</button>
   </div>
 </template>
@@ -10,6 +13,11 @@ import firebase from 'firebase'
 
 export default {
   name: 'HelloWorld',
+  firebase () {
+    return {
+      monsters: firebase.database().ref('monsters')
+    }
+  },
   data () {
     return {
       msg: 'Welcome to MonStore!'
@@ -46,7 +54,7 @@ button {
   background: #42b983;
   color: white;
   font-weight: bold;
-  boder: none;
+  border: none;
   border-radius: 22px;
   outline: 0;
   cursor: pointer;

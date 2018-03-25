@@ -1,18 +1,26 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h4>Monsters:</h4>
     <ul>
-      <li v-for="(monster, index) in monsters" v-bind:key="index">{{monster.name}}</li>
+      <li v-for="(monster, index) in monsters" v-bind:key="index">{{monster.name}}
+        <span class="delete-button" v-on:click="removeMonster(monster)">X</span>
+      </li>
     </ul>
-    <button v-on:click="logout">Logout</button>
+    <Button v-on:click="createMonster">New Monster</Button>
+    <Button v-on:click="logout">Logout</Button>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+import Button from '@/components/Button'
 
 export default {
   name: 'HelloWorld',
+  components: {
+    'Button': Button
+  },
   firebase () {
     return {
       monsters: firebase.database().ref('monsters')
@@ -24,7 +32,13 @@ export default {
     }
   },
   methods: {
-    logout: function () {
+    createMonster () {
+      this.$router.replace('create_monster')
+    },
+    removeMonster (monster) {
+      this.$firebaseRefs.monsters.child(monster['.key']).remove()
+    },
+    logout () {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
@@ -43,20 +57,17 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
   margin: 0 10px;
 }
 a {
   color: #42b983;
 }
-button {
-  padding: 10px 20px;
-  background: #42b983;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 22px;
-  outline: 0;
+.delete-button {
+  color: #FF4136;
+  font-size: 14px;
+  font-weight: bolder;
   cursor: pointer;
+  margin-left: 25px;
+  user-select: none;
 }
 </style>

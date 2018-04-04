@@ -34,26 +34,29 @@ export default {
   methods: {
     // Add monster to firebase, but only if it's less than 46 characters and doesn't already exist.
     addMonster () {
-      // this.$firebaseRefs.monsters is how we access the monsters database (using vuefire)
-      // .once('value') listens for exactly one 'value' event from firebase
-      this.$firebaseRefs.monsters.once('value', s => {
-        // Retrieve all existing database entries into an array called 'monsterVals'
-        const monsterVals = Object.values(s.val())
-        // Put only the 'name' value of the database entries into an array called 'monsterNames'
-        const monsterNames = monsterVals.map(m => m.name)
-        // Check the length of the NEW monster's name
-        if (this.newMonster.name.length > 45) {
-          alert('Monster names must be less than 46 characters. This one is ' + this.newMonster.name.length + '.')
-        // Check if NEW monster name already exists in monsterNames array
-        } else if (monsterNames.includes(this.newMonster.name)) {
-          alert('This monster name already exists. Please try another name.')
-        // If above conditions are false then add the new monster to monsters database using .push
-        // then return to main page.
-        } else {
-          this.$firebaseRefs.monsters.push(this.newMonster)
-          this.$router.replace('hello')
-        }
-      })
+      // Check the length of the NEW monster's name
+      if (this.newMonster.name.length > 45) {
+        alert('Monster names must be less than 46 characters. This one is ' + this.newMonster.name.length + '.')
+      } else {
+        // To check if monster name already exists, we have to check the database
+        this.$firebaseRefs.monsters.once('value', s => {
+          // this.$firebaseRefs.monsters is how we access the monsters database (using vuefire)
+          // .once('value') listens for exactly one 'value' event from firebase
+          // Retrieve all existing database entries into an array called 'monsterVals'
+          const monsterVals = Object.values(s.val())
+          // Put only the 'name' value of the database entries into an array called 'monsterNames'
+          const monsterNames = monsterVals.map(m => m.name)
+          // Check if NEW monster name already exists in monsterNames array
+          if (monsterNames.includes(this.newMonster.name)) {
+            alert('This monster name already exists. Please try another name.')
+          // If above conditions are false then add the new monster to monsters database using .push
+          // then return to main page.
+          } else {
+            this.$firebaseRefs.monsters.push(this.newMonster)
+            this.$router.replace('hello')
+          }
+        })
+      }
     }
   }
 }

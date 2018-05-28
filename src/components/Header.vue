@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span v-on:click="goto('hello')">MonStore</span>
+    <span v-on:click="goto('/hello')">MonStore</span>
     <Menu />
   </header>
 </template>

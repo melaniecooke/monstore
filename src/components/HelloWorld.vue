@@ -3,7 +3,8 @@
     <h1>{{ msg }}</h1>
     <h4>Monsters:</h4>
     <ul>
-      <li v-for="(monster, index) in monsters" v-bind:key="index">{{monster.name}}
+      <li v-for="(monster, index) in monsters" v-bind:key="index">
+        <a v-on:click="handleClick(monster)">{{monster.name}}</a>
         <span class="delete-button" v-on:click="removeMonster(monster)">X</span>
       </li>
     </ul>
@@ -32,6 +33,9 @@ export default {
     }
   },
   methods: {
+    handleClick (monster) {
+      this.$router.replace(`monster/${monster['.key']}`)
+    },
     createMonster () {
       this.$router.replace('create_monster')
     },
@@ -60,7 +64,9 @@ li {
   margin: 0 10px;
 }
 a {
+  user-select: none;
   color: #42b983;
+  cursor: pointer;
 }
 .delete-button {
   color: #FF4136;

@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
+import Monster from '@/components/Monster'
 import CreateMonster from '@/components/CreateMonster'
 import firebase from 'firebase'
 
@@ -41,6 +42,14 @@ let router = new Router({
       path: '/create_monster',
       name: 'Create Monster',
       component: CreateMonster,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/monster/:id',
+      name: 'Monster',
+      component: Monster,
       meta: {
         requiresAuth: true
       }
